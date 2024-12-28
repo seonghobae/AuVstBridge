@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "au-vst-bridge"
+version = "1.0.4"
+description = "Audio Unit plugin which can host VST plugins"
+authors = ["Seongho Bae"]
+readme = "README.md"
+packages = [{include = "au_vst_bridge"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+pathlib = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.0.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+flake8 = "^7.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

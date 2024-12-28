@@ -39,7 +39,7 @@ public:
     void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 	//==============================================================================
 	bool acceptsMidi() const override;
-	bool producesMidi() const override;	
+	bool producesMidi() const override;
 	double getTailLengthSeconds() const override;
 	//==============================================================================
 	AudioProcessorEditor* createEditor() override;
@@ -57,7 +57,7 @@ public:
 	void setPluginInstance(AudioPluginInstance* instance) {
 		DebugTools::log(std::stringstream() << "setPluginInstance() called");
 		pluginInstance_ = instance;
-		updateGraph();		
+		updateGraph();
 		processorLayoutsChanged();
 	}
 	AudioPluginInstance* getPluginInstance() const { return pluginInstance_; }
@@ -70,7 +70,7 @@ public:
 	std::pair<int, int> getCurrentEditorDimension() {
 		if (pluginInstance_ != nullptr) {
 			return editorsDimension_[pluginInstance_->getPluginDescription().uid];
-		} 
+		}
 		return std::pair<int, int>();
 	}
 	//==============================================================================
@@ -91,7 +91,7 @@ private:
 	Node::Ptr midiInputNode_;
 	Node::Ptr midiOutputNode_;
 	Node::Ptr pluginNode_;
-	
+
 	bool pluginInitialized_ = false;
 	bool graphReady_ = false;
 

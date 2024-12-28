@@ -2,7 +2,7 @@
 
 **Current version**: 1.0.4
 
-Do you have VST plugins you really want to use in MainStage or GarageBand but you can't because they won't load VST plugins? AU-VST-Bridge is an Audio Unit plugin which can host VST (2 and 3) plugin. 
+Do you have VST plugins you really want to use in MainStage or GarageBand but you can't because they won't load VST plugins? AU-VST-Bridge is an Audio Unit plugin which can host VST (2 and 3) plugin.
 
 Currently it can only host one plugin, but maybe in the future it will be able to host and chain multiple plugins... but as long as you can have multiple AU-VST-Bridge in your DAW you can host multiple VST plugins and chain them in the DAW directly.
 
@@ -47,5 +47,5 @@ Workflow: CONFIRMED (means reproduced) -> FIXED (means action taken) -> RESOLVED
 - [AU] crash when changing plugin hosted in Mainstage ** FIXED v1.0.4 **
 - [AU] Spicy Guitar plugin editor is outside our plugin editor's area ** CONFIRMED v1.0.4 **
 - [All] Write documentation
-- [All] Finalise README.md (details about project and files) 
+- [All] Finalise README.md (details about project and files)
 - [All] defines plugin in categories synth and effects (and maybe others?)

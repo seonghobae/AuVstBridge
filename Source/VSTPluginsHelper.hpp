@@ -32,7 +32,7 @@ private:
 		DebugTools::log(std::stringstream() << "VST3 search path: " << vst3Format.getDefaultLocationsToSearch().toString());
 		PluginDirectoryScanner scanner(*list, vst3Format, vst3Format.getDefaultLocationsToSearch(), true, File());
 
-		String pluginName; 
+		String pluginName;
 		while (true) {
 			String nextname = scanner.getNextPluginFileThatWillBeScanned();
             if (nextname.equalsIgnoreCase(JucePlugin_Name)) {
@@ -51,7 +51,7 @@ public:
 	std::shared_ptr<KnownPluginList> pluginsList() {
 		auto plist = std::make_shared<KnownPluginList>();
 		AudioPluginFormatManager pluginFormatManager;
-		pluginFormatManager.addDefaultFormats();		
+		pluginFormatManager.addDefaultFormats();
 
 		DebugTools::log("Getting VST plugins list");
 		addVST2PluginsToPluginsList(plist);
@@ -60,7 +60,7 @@ public:
 		if (pluginFormatManager.getNumFormats() == 0) {
 			DebugTools::log("No plugins format available... aborting.");
 			return plist;
-		}		
+		}
 
 		for (int i = 0; i < pluginFormatManager.getNumFormats(); i++) {
 			if (pluginFormatManager.getFormat(i)->getName() == "VST") {
@@ -82,7 +82,7 @@ public:
 			if (plugin_it != nullptr) {
 				PluginDescription *pluginDescription = *plugin_it;
 				if (pluginDescription == nullptr) continue;
-				if (pluginDescription->uid == pluginId) {					
+				if (pluginDescription->uid == pluginId) {
 					AudioPluginFormatManager pluginFormatManager;
 					pluginFormatManager.addDefaultFormats();
 					String msg = "no error";
@@ -93,8 +93,8 @@ public:
 
 					if (pluginInstance == nullptr) {
 						DebugTools::log(std::stringstream() << "Error when loading the plugin: " << msg);
-					} 
-					
+					}
+
 					DebugTools::log("Plugin loaded");
 					DebugTools::log(std::stringstream() << "Plugin category: " << pluginDescription->category);
 					DebugTools::log(std::stringstream() << "Plugin is instrument: " << pluginDescription->isInstrument);

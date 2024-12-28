@@ -27,7 +27,7 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 
-private:    
+private:
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -35,7 +35,7 @@ private:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorEditor)
 
-	void setupUi();	
+	void setupUi();
 	void resetPluginInstance(AudioPluginInstance *, bool changed = false);
 	void onPluginsComboboxChanged();
 
@@ -45,6 +45,6 @@ private:
 
 	VSTPluginsHelper vstPluginsHelper_;
 	std::shared_ptr<KnownPluginList> knownPlugins_;
-	AudioProcessorEditor *pluginEditor_ = nullptr;	
+	AudioProcessorEditor *pluginEditor_ = nullptr;
 
 };

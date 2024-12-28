@@ -9,7 +9,7 @@ MainProcessor::MainProcessor()
 			.withOutput("Output", AudioChannelSet::stereo(), true)
 	   ),
 	   audioProcessorGraph_(new AudioProcessorGraph())
-{    	
+{
 }
 
 MainProcessor::~MainProcessor()
@@ -22,7 +22,7 @@ MainProcessor::~MainProcessor()
 //==============================================================================
 const String MainProcessor::getName() const
 {
-    String pluginName = "[Bridged] xxxx";    
+    String pluginName = "[Bridged] xxxx";
 	DebugTools::log(std::stringstream() << "getName() called");
     return pluginName;
 }
@@ -39,7 +39,7 @@ bool MainProcessor::producesMidi() const
 
 double MainProcessor::getTailLengthSeconds() const
 {
-	DebugTools::log(std::stringstream() << "getTailLengthInSeconds() called");  
+	DebugTools::log(std::stringstream() << "getTailLengthInSeconds() called");
 	if (pluginInstance_ != nullptr) {
 		return pluginInstance_->getTailLengthSeconds();
 	}
@@ -48,17 +48,17 @@ double MainProcessor::getTailLengthSeconds() const
 
 int MainProcessor::getNumPrograms()
 {
-	DebugTools::log(std::stringstream() << "getNumPrograms() called");    
+	DebugTools::log(std::stringstream() << "getNumPrograms() called");
 	if (pluginInstance_ != nullptr) {
 		return pluginInstance_->getNumPrograms();
-	} 
+	}
 
 	return 0;
 }
 
 int MainProcessor::getCurrentProgram()
 {
-	DebugTools::log(std::stringstream() << "getCurrentProgram() called"); 
+	DebugTools::log(std::stringstream() << "getCurrentProgram() called");
 	if (pluginInstance_ != nullptr) {
 		return pluginInstance_->getCurrentProgram();
 	}
@@ -67,7 +67,7 @@ int MainProcessor::getCurrentProgram()
 
 void MainProcessor::setCurrentProgram (int index)
 {
-	DebugTools::log(std::stringstream() << "setCurrentProgram(" << index << ")");    
+	DebugTools::log(std::stringstream() << "setCurrentProgram(" << index << ")");
 	if (pluginInstance_ != nullptr) {
 		pluginInstance_->setCurrentProgram(index);
 	}
@@ -75,7 +75,7 @@ void MainProcessor::setCurrentProgram (int index)
 
 const String MainProcessor::getProgramName (int index)
 {
-	DebugTools::log(std::stringstream() << "getProgramName( " << index << ")");   
+	DebugTools::log(std::stringstream() << "getProgramName( " << index << ")");
 	if (pluginInstance_ != nullptr) {
 		return pluginInstance_->getProgramName(index);
 	}
@@ -84,9 +84,9 @@ const String MainProcessor::getProgramName (int index)
 
 void MainProcessor::changeProgramName (int index, const String& newName)
 {
-	DebugTools::log(std::stringstream() << "changeProgramName(" << index << ", " << newName << ")");   
+	DebugTools::log(std::stringstream() << "changeProgramName(" << index << ", " << newName << ")");
 	if (pluginInstance_ != nullptr) {
-		pluginInstance_->changeProgramName(index, newName); 
+		pluginInstance_->changeProgramName(index, newName);
 	}
 }
 
@@ -127,14 +127,14 @@ void MainProcessor::releaseResources()
 bool MainProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
 	DebugTools::log(std::stringstream() << "isBusesLayoutSupported() called");
-	
+
 	if (layouts.getMainInputChannelSet() == AudioChannelSet::disabled()
 		|| layouts.getMainOutputChannelSet() == AudioChannelSet::disabled())
 		return false;
 	if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
 		&& layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
 		return false;
-	return layouts.getMainInputChannelSet() == layouts.getMainOutputChannelSet();	
+	return layouts.getMainInputChannelSet() == layouts.getMainOutputChannelSet();
 }
 
 
@@ -146,22 +146,22 @@ bool MainProcessor::hasEditor() const
 }
 
 AudioProcessorEditor* MainProcessor::createEditor()
-{	
-	//This editor will be used to select and configure plugin to be hosted	
-	return new ProcessorEditor(*this);	
+{
+	//This editor will be used to select and configure plugin to be hosted
+	return new ProcessorEditor(*this);
 }
 
 //==============================================================================
 void MainProcessor::getStateInformation (MemoryBlock& destData)
 {
 	DebugTools::log(std::stringstream() << "getStateInformation() called");
-	//Here we must save the current state of the AU-VST plugin 
-	//as well as the state of the hosted plugin	
-	
+	//Here we must save the current state of the AU-VST plugin
+	//as well as the state of the hosted plugin
+
 	//Our memory block layout is:
 	//Byte 0: is_initialised? 1=true|0=false - 1 byte
 	//** Byte 1-4: plugin description length (including \0) - 4 bytes
-	//Byte 5-n: plugin description string 
+	//Byte 5-n: plugin description string
 	//** Byte n+1-n+4: plugin memory block length - 4 bytes
 	//Byte n+5: plugin memory block
 	MemoryBlock pluginData;
@@ -186,13 +186,13 @@ void MainProcessor::getStateInformation (MemoryBlock& destData)
 }
 
 void MainProcessor::setStateInformation (const void* data, int sizeInBytes)
-{	
+{
 	DebugTools::log(std::stringstream() << "setStateInformation called. sizeInBytes= " << sizeInBytes);
 	suspendProcessing(true);
 
-	MemoryInputStream st(data, sizeInBytes, false);	
+	MemoryInputStream st(data, sizeInBytes, false);
 	DebugTools::log(std::stringstream() << "Stream data size: " << st.getDataSize());
-	
+
 	bool pluginInitialised = (st.readByte() == 0 ? false : true);
 	DebugTools::log(std::stringstream() << "Plugin initialised? " << (pluginInitialised ? "true" : "false"));
 	String pluginIdentifierString;
@@ -207,12 +207,12 @@ void MainProcessor::setStateInformation (const void* data, int sizeInBytes)
 
 	//Now we load the plugin
 	if (!pluginIdentifierString.isEmpty()) {
-		//Before loading the plugin we need to unload the current if any		
+		//Before loading the plugin we need to unload the current if any
 		if (pluginInstance_ == nullptr) {
 			VSTPluginsHelper vstPluginsHelper;
 			AudioPluginInstance * pluginInstance = vstPluginsHelper.getPluginWithIdentifierString(pluginIdentifierString);
-			if (pluginInstance != nullptr) {				
-				setPluginInstance(pluginInstance);				
+			if (pluginInstance != nullptr) {
+				setPluginInstance(pluginInstance);
 			}
 		}
 	}
@@ -244,9 +244,9 @@ void MainProcessor::connectAudioNodes()
 	DebugTools::log("connectAudioNodes() called");
 	for (int channel = 0; channel < 2; ++channel) {
 		audioProcessorGraph_->addConnection(
-			{ 
+			{
 				{ audioInputNode_->nodeID,  channel },
-				{ audioOutputNode_->nodeID, channel } 
+				{ audioOutputNode_->nodeID, channel }
 			}
 		);
 	}
@@ -287,12 +287,12 @@ void MainProcessor::updateGraph()
 	if (pluginInstance_ == nullptr) {
 		return;
 	}
-	
+
 	//Remove all existing nodes
 	/*for (auto node : audioProcessorGraph_->getNodes()) {
 		audioProcessorGraph_->removeNode(node);
-	}	
-	
+	}
+
 	//Remove all existing connections
 	for (auto connection : audioProcessorGraph_->getConnections()) {
 		audioProcessorGraph_->removeConnection(connection);
@@ -306,32 +306,32 @@ void MainProcessor::updateGraph()
 	pluginNode_ = audioProcessorGraph_->addNode(pluginInstance_);
 
 	//Reset plugin config details and prepare to play
-	pluginInstance_->setPlayConfigDetails(getMainBusNumInputChannels(), getMainBusNumOutputChannels(), getSampleRate(), getBlockSize());	
+	pluginInstance_->setPlayConfigDetails(getMainBusNumInputChannels(), getMainBusNumOutputChannels(), getSampleRate(), getBlockSize());
 	pluginInstance_->prepareToPlay(getSampleRate(), getBlockSize());
-	
-	//Connect the inputs and outputs to the plugin inputs and outputs	
+
+	//Connect the inputs and outputs to the plugin inputs and outputs
 	for (int channel = 0; channel < 2; ++channel) {
 		audioProcessorGraph_->addConnection( //Audio input to plugin input
-			{ 
+			{
 				{ audioInputNode_->nodeID, channel },
 				{ pluginNode_->nodeID, channel }
 			}
-		);	
+		);
 		audioProcessorGraph_->addConnection( //Plugin output to audio output
-			{ 
+			{
 				{ pluginNode_->nodeID, channel },
-				{ audioOutputNode_->nodeID, channel } 
+				{ audioOutputNode_->nodeID, channel }
 			}
 		);
 	}
-	
+
 	graphReady_ = true;
 
 	//Reconnect MIDI nodes
 	connectMidiNodes();
 
 	//Enable all buses in the plugin
-	pluginInstance_->enableAllBuses();	
+	pluginInstance_->enableAllBuses();
 
 	pluginInitialized_ = true;
 	DebugTools::log("Graph initialized");

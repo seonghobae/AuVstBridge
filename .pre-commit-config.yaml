@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.9.0
+    hooks:
+      - id: shellcheck
+        name: Check shell scripts
+        args: ["--severity=warning"] # 경고 수준 이상의 문제만 검사
+        types: [shell]
+        files: '.*\.sh$'
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml # YAML 파일 문법 검사
+        name: Check YAML syntax
+      - id: end-of-file-fixer # 파일 끝에 빈 줄 추가
+        name: Fix end of files
+      - id: trailing-whitespace # 줄 끝의 불필요한 공백 제거
+        name: Trim trailing whitespace
+      - id: check-executables-have-shebangs # 실행 파일의 shebang 확인
+        name: Check executables have shebangs
+      - id: check-shebang-scripts-are-executable # shebang이 있는 스크립트의 실행 권한 확인
+        name: Check shebang scripts are executable
+
+  - repo: local
+    hooks:
+      - id: check-installer-version
+        name: Check installer version matches
+        entry: python scripts/check_version.py
+        language: python
+        files: '^install\.sh$'
+        additional_dependencies: []

@@ -1,3 +1,6 @@
 [submodule "Dependencies/vst3sdk"]
 	path = Dependencies/vst3sdk
 	url = https://github.com/steinbergmedia/vst3sdk.git
+[submodule "Dependencies/JUCE"]
+	path = Dependencies/JUCE
+	url = https://github.com/juce-framework/JUCE.git
